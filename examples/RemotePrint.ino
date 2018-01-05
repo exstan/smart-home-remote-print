@@ -2,6 +2,7 @@
 
 #define LOG_OUTPUT "SERIAL_TELNET" // "SERIAL", "TELNET", "SERIAL_TELNET", "NONE"
 #define LOG_LEVEL "DEBUG"          // "ANY", "VERBOSE", "DEBUG", "INFO", "WARNING", "ERROR", "PROFILER"
+#define HOSTNAME "my.esp"
 #define SERIAL_BAND 115200
 
 unsigned long lastPrintMillis = 0;
