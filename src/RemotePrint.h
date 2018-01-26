@@ -4,6 +4,8 @@
 #include "Arduino.h"
 #include "RemoteDebug.h"
 
+#undef MAX_TIME_INACTIVE
+
 class RemotePrint {
 public:
 
