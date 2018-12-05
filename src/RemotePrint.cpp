@@ -37,18 +37,18 @@ RemotePrint * RemotePrint::instance() {
     #endif // ifndef LOG_OUTPUT
 
     logLevel      = RemoteDebug::INFO;
-    serialEnabled = (strcmp(LOG_OUTPUT, "SERIAL") == 0 || strcmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
-    telnetEnabled = (strcmp(LOG_OUTPUT, "TELNET") == 0 || strcmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
+    serialEnabled = (strcasecmp(LOG_OUTPUT, "SERIAL") == 0 || strcasecmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
+    telnetEnabled = (strcasecmp(LOG_OUTPUT, "TELNET") == 0 || strcasecmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
 
     #ifdef LOG_LEVEL
 
-    if (strcmp(LOG_LEVEL, "ANY") == 0) logLevel = RemoteDebug::ANY;
-    else if (strcmp(LOG_LEVEL, "VERBOSE") == 0) logLevel = RemoteDebug::VERBOSE;
-    else if (strcmp(LOG_LEVEL, "DEBUG") == 0) logLevel = RemoteDebug::DEBUG;
-    else if (strcmp(LOG_LEVEL, "INFO") == 0) logLevel = RemoteDebug::INFO;
-    else if (strcmp(LOG_LEVEL, "WARNING") == 0) logLevel = RemoteDebug::WARNING;
-    else if (strcmp(LOG_LEVEL, "ERROR") == 0) logLevel = RemoteDebug::ERROR;
-    else if (strcmp(LOG_LEVEL, "PROFILER") == 0) logLevel = RemoteDebug::PROFILER;
+    if (strcasecmp(LOG_LEVEL, "ANY") == 0) logLevel = RemoteDebug::ANY;
+    else if (strcasecmp(LOG_LEVEL, "VERBOSE") == 0) logLevel = RemoteDebug::VERBOSE;
+    else if (strcasecmp(LOG_LEVEL, "DEBUG") == 0) logLevel = RemoteDebug::DEBUG;
+    else if (strcasecmp(LOG_LEVEL, "INFO") == 0) logLevel = RemoteDebug::INFO;
+    else if (strcasecmp(LOG_LEVEL, "WARNING") == 0) logLevel = RemoteDebug::WARNING;
+    else if (strcasecmp(LOG_LEVEL, "ERROR") == 0) logLevel = RemoteDebug::ERROR;
+    else if (strcasecmp(LOG_LEVEL, "PROFILER") == 0) logLevel = RemoteDebug::PROFILER;
     #endif // ifdef LOG_LEVEL
 
     if (serialEnabled) {
