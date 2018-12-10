@@ -10,6 +10,7 @@ class RemotePrint {
 public:
 
   RemotePrint(String  hostName,
+              String  telnetPassword     = "",
               uint8_t startingDebugLevel = RemoteDebug::DEBUG,
               bool    serialEnabled      = false,
               bool    telnetEnabled      = true);

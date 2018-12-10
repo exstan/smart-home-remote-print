@@ -1,6 +1,7 @@
 #include "RemotePrint.h"
 
 RemotePrint::RemotePrint(String  hostName,
+                         String  telnetPassword,
                          uint8_t startingDebugLevel,
                          bool    serialEnabled,
                          bool    telnetEnabled) {
@@ -8,6 +9,8 @@ RemotePrint::RemotePrint(String  hostName,
     Debug.begin(hostName, startingDebugLevel);
     Debug.setSerialEnabled(serialEnabled);
     Debug.setResetCmdEnabled(true); // Enable the reset command
+
+    if (telnetPassword.length() != 0) Debug.setPassword(telnetPassword);
   }
 }
 
@@ -24,23 +27,28 @@ RemotePrint * RemotePrint::instance() {
     hostName = HOSTNAME;
     #endif // ifdef HOSTNAME
 
+    String telnetPassword = "";
+    #ifdef TELNET_PASSWORD
+    telnetPassword = TELNET_PASSWORD;
+    #endif // ifdef TELNET_PASSWORD
+
     #ifndef LOG_OUTPUT
     # define LOG_OUTPUT "SERIAL_TELNET"
     #endif // ifndef LOG_OUTPUT
 
     logLevel      = RemoteDebug::INFO;
-    serialEnabled = (LOG_OUTPUT == "SERIAL" || LOG_OUTPUT == "SERIAL_TELNET");
-    telnetEnabled = (LOG_OUTPUT == "TELNET" || LOG_OUTPUT == "SERIAL_TELNET");
+    serialEnabled = (strcasecmp(LOG_OUTPUT, "SERIAL") == 0 || strcasecmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
+    telnetEnabled = (strcasecmp(LOG_OUTPUT, "TELNET") == 0 || strcasecmp(LOG_OUTPUT, "SERIAL_TELNET") == 0);
 
     #ifdef LOG_LEVEL
 
-    if (LOG_LEVEL == "ANY") logLevel = RemoteDebug::ANY;
-    else if (LOG_LEVEL == "VERBOSE") logLevel = RemoteDebug::VERBOSE;
-    else if (LOG_LEVEL == "DEBUG") logLevel = RemoteDebug::DEBUG;
-    else if (LOG_LEVEL == "INFO") logLevel = RemoteDebug::INFO;
-    else if (LOG_LEVEL == "WARNING") logLevel = RemoteDebug::WARNING;
-    else if (LOG_LEVEL == "ERROR") logLevel = RemoteDebug::ERROR;
-    else if (LOG_LEVEL == "PROFILER") logLevel = RemoteDebug::PROFILER;
+    if (strcasecmp(LOG_LEVEL, "ANY") == 0) logLevel = RemoteDebug::ANY;
+    else if (strcasecmp(LOG_LEVEL, "VERBOSE") == 0) logLevel = RemoteDebug::VERBOSE;
+    else if (strcasecmp(LOG_LEVEL, "DEBUG") == 0) logLevel = RemoteDebug::DEBUG;
+    else if (strcasecmp(LOG_LEVEL, "INFO") == 0) logLevel = RemoteDebug::INFO;
+    else if (strcasecmp(LOG_LEVEL, "WARNING") == 0) logLevel = RemoteDebug::WARNING;
+    else if (strcasecmp(LOG_LEVEL, "ERROR") == 0) logLevel = RemoteDebug::ERROR;
+    else if (strcasecmp(LOG_LEVEL, "PROFILER") == 0) logLevel = RemoteDebug::PROFILER;
     #endif // ifdef LOG_LEVEL
 
     if (serialEnabled) {
@@ -52,6 +60,7 @@ RemotePrint * RemotePrint::instance() {
     }
 
     s_instance = new RemotePrint(hostName,
+                                 telnetPassword,
                                  logLevel,
                                  serialEnabled,
                                  telnetEnabled);
